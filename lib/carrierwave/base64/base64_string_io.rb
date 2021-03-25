@@ -1,6 +1,3 @@
-require 'mimemagic'
-require 'mimemagic/overlay'
-
 module Carrierwave
   module Base64
     # Class that decodes a base64 string, builds a StringIO for the
@@ -48,9 +45,7 @@ module Carrierwave
 
       # Determine content type from input, with provided type as fallback
       def get_file_extension(description, bytes)
-        detected_type = MimeMagic.by_magic(bytes)
-        content_type = (detected_type && detected_type.type) ||
-                       description.split(';base64').first
+        content_type = description.split(';base64').first
         mime_type = MIME::Types[content_type].last
         unless mime_type
           raise Carrierwave::Base64::UnknownMimeTypeError,
